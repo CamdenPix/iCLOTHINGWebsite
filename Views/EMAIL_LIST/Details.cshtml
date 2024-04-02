@@ -1,0 +1,34 @@
+﻿@model iCLOTHINGWebsite.Models.EMAIL_LIST
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EMAIL_LIST</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EMAIL.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMAIL.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USERS.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USERS.Username)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,48 @@
+﻿@model iCLOTHINGWebsite.Models.BILLINGINFO
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>BILLINGINFO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.USERS.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USERS.Username)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
