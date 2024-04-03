@@ -46,18 +46,38 @@ namespace iCLOTHINGWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Username,ShippingAddress,BillingAddress,DOB,Gender")] USERS uSERS)
+        public ActionResult Create(USERS uSERS, string Password, string ConfirmPassword)
         {
+            if (!Password.Equals(ConfirmPassword) || Password.Length < 8) 
+            {
+                return View(uSERS);
+            }
+            uSERS.ID = GenUniqueID();
             if (ModelState.IsValid)
             {
                 db.USERS.Add(uSERS);
+                USERPASSWORD uSERPASSWORD = new USERPASSWORD();
+                uSERPASSWORD.ID = GenUniqueIDPassword();
+                uSERPASSWORD.UserId = uSERS.ID;
+                uSERPASSWORD.Password = Password;
+                uSERPASSWORD.passwordExpiryTime = (int)DateTime.Now.TimeOfDay.TotalSeconds;
+                uSERPASSWORD.passwordExpiryDate = DateTime.Now.AddYears(1).ToShortDateString();
+                db.USERPASSWORD.Add(uSERPASSWORD);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             return View(uSERS);
         }
-
+        //For security purposes, this should be changed to more random numbers
+        private int GenUniqueID()
+        {
+            return db.USERS.Max(f => (int?)f.ID) + 1 ?? 0;
+        }
+        private int GenUniqueIDPassword()
+        {
+            return db.USERPASSWORD.Max(f => (int?)f.ID) + 1 ?? 0;
+        }
         // GET: USERS/Edit/5
         public ActionResult Edit(int? id)
         {
