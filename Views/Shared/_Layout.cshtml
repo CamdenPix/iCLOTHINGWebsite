@@ -22,7 +22,20 @@
                     <li>@Html.ActionLink("Feedback", "Create", "Feedbacks", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Requests", "Create", "Special_Query", new { area = "" }, new { @class = "nav-link" })</li>
                     <!--Once logged in it should say "Welcome, Name" instead-->
-                    <li>@Html.ActionLink("Login", "Login", "Userpasswords", new { area = "" }, new { @class = "nav-link" })</li>
+                    @{
+                        string user = (string)Session["username"];
+                    }
+                    @if (user == null)
+                    {
+                        <li>@Html.ActionLink("Login", "Login", "Userpasswords", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Cart", "Index", "Shoppingcarts", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item ms-auto">
+                            <span class="nav-link">Welcome, @(user)</span>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
