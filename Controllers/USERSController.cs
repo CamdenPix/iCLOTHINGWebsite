@@ -64,7 +64,7 @@ namespace iCLOTHINGWebsite.Controllers
                 uSERPASSWORD.passwordExpiryDate = DateTime.Now.AddYears(1).ToShortDateString();
                 db.USERPASSWORD.Add(uSERPASSWORD);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Login", "USERPASSWORDs");
             }
 
             return View(uSERS);

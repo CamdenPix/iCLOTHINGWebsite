@@ -165,6 +165,7 @@
     <Compile Include="Models\CATEGORY_ITEMS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\IsAdmin.cs" />
     <Compile Include="Models\DEPARTMENT.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -372,6 +373,7 @@
     <Content Include="Views\SPECIAL_QUERY\Edit.cshtml" />
     <Content Include="Views\SPECIAL_QUERY\Index.cshtml" />
     <Content Include="Views\USERPASSWORDs\Login.cshtml" />
+    <Content Include="Views\ADMINS\ControlPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

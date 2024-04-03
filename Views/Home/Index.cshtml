@@ -1,4 +1,5 @@
-﻿@{
+﻿@model iCLOTHINGWebsite.Models.IsAdmin
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -24,6 +25,14 @@
         <h2>@Html.ActionLink("Register", "Create", "USERS")</h2>
         <p>New User? Create an account here</p>
     </div>
+
+    @if (Model.state)
+    {
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Control Panel", "ControlPanel", "Admins")</h2>
+            <p>Not an Admin? Please report this to us</p>
+        </div>
+    }
 
 
 </div>

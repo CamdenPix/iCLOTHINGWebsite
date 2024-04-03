@@ -108,6 +108,10 @@ namespace iCLOTHINGWebsite.Controllers
             }
             return View(aDMINS);
         }
+        public ActionResult ControlPanel()
+        {
+            return View();
+        }
 
         // POST: ADMINS/Delete/5
         [HttpPost, ActionName("Delete")]

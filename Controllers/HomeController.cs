@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iCLOTHINGWebsite.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,21 @@ namespace iCLOTHINGWebsite.Controllers
 {
     public class HomeController : Controller
     {
+        private iCLOTHINGEntities db = new iCLOTHINGEntities();
         public ActionResult Index()
         {
-            return View();
+            var Admin = new IsAdmin(false);
+            if (Session["user"] == null)
+            {
+                return View(Admin);
+            }
+            var aDMINS = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if(aDMINS == null)
+            {
+                return View(Admin);
+            }
+            Admin.state = true;
+            return View(Admin);
         }
 
         public ActionResult About()
