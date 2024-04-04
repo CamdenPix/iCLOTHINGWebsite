@@ -121,7 +121,7 @@ namespace iCLOTHINGWebsite.Controllers
             ITEM iTEM = db.ITEM.Find(id);
             db.ITEM.Remove(iTEM);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
 
         protected override void Dispose(bool disposing)
