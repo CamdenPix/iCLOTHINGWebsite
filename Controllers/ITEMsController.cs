@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.Expressions;
 using iCLOTHINGWebsite.Models;
 
 namespace iCLOTHINGWebsite.Controllers
@@ -15,10 +16,18 @@ namespace iCLOTHINGWebsite.Controllers
         private iCLOTHINGEntities db = new iCLOTHINGEntities();
 
         // GET: ITEMs
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             var iTEM = db.ITEM.Include(i => i.BRAND1).Include(i => i.DEPARTMENT1);
-            return View(iTEM.ToList());
+            if (String.IsNullOrEmpty(search))
+            {
+                return View(iTEM);
+            }
+            Console.WriteLine(search);
+            string input = "'" + search + "'";
+            string query = "SELECT * FROM ITEM WHERE Name = "+ input;
+            var list = db.ITEM.SqlQuery(query).ToList();
+            return View(list);
         }
 
         // GET: ITEMs/Details/5
@@ -130,7 +139,7 @@ namespace iCLOTHINGWebsite.Controllers
             ITEM iTEM = db.ITEM.Find(id);
             db.ITEM.Remove(iTEM);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
 
         protected override void Dispose(bool disposing)
