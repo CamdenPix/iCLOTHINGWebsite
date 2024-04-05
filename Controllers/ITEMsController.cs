@@ -16,11 +16,18 @@ namespace iCLOTHINGWebsite.Controllers
         private iCLOTHINGEntities db = new iCLOTHINGEntities();
 
         // GET: ITEMs
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             var iTEM = db.ITEM.Include(i => i.BRAND1).Include(i => i.DEPARTMENT1);
-           
-            return View(iTEM.ToList());
+            if (String.IsNullOrEmpty(search))
+            {
+                return View(iTEM);
+            }
+            Console.WriteLine(search);
+            string input = "'" + search + "'";
+            string query = "SELECT * FROM ITEM WHERE Name = "+ input;
+            var list = db.ITEM.SqlQuery(query).ToList();
+            return View(list);
         }
 
         // GET: ITEMs/Details/5
