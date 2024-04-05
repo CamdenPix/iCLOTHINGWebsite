@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls.Expressions;
 using iCLOTHINGWebsite.Models;
 
 namespace iCLOTHINGWebsite.Controllers
@@ -18,6 +19,7 @@ namespace iCLOTHINGWebsite.Controllers
         public ActionResult Index()
         {
             var iTEM = db.ITEM.Include(i => i.BRAND1).Include(i => i.DEPARTMENT1);
+           
             return View(iTEM.ToList());
         }
 
