@@ -16,7 +16,7 @@
             <h2>@Html.ActionLink("Shop by Brand", "Index", "BRANDS")</h2>
         </div>
         <div class="col-md-4">
-            <h2>@Html.ActionLink("Shop by Category", "Index", "CATEGORies")</h2>
+            <h2>@Html.ActionLink("Shop by Category", "Index", "CATEGORY_ITEMS")</h2>
         </div>
         <div class="col-md-4">
             <h2>@Html.ActionLink("Shop all Items", "Index", "ITEMs")</h2>
@@ -24,9 +24,7 @@
     </div>
     <div>
         <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
+       
         <table class="table">
             <tr>
                 <th>
@@ -48,9 +46,9 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                       
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        
                     </td>
                 </tr>
             }

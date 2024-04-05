@@ -12,7 +12,7 @@
     <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
         <div class="col-md-4">
-            <h2>@Html.ActionLink("Shop by Category", "Index", "CATEGORies")</h2>
+            <h2>@Html.ActionLink("Shop by Category", "Index", "CATEGORY_ITEMS")</h2>
         </div>
         <div class="col-md-4">
             <h2>@Html.ActionLink("Shop by Department", "Index", "DEPARTMENTs")</h2>
@@ -25,9 +25,7 @@
 
     <div>
         <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
+        
         <table class="table">
             <tr>
                 <th>
@@ -39,7 +37,7 @@
                 <th></th>
             </tr>
 
-            @foreach (var item in Model)
+            @foreach (var item in Model.OrderBy(x => x.Brand1))
             {
                 <tr>
                     <td>
@@ -49,9 +47,9 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                        
                     </td>
                 </tr>
             }
