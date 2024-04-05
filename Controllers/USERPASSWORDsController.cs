@@ -154,8 +154,9 @@ namespace iCLOTHINGWebsite.Controllers
             }
 
             Session["user"] = userID;
+            Session["username"] = Username;
             Console.WriteLine("Session Set");
-            return RedirectToAction("Details", "Items");
+            return RedirectToAction("Index", "Items");
         }
 
         protected override void Dispose(bool disposing)

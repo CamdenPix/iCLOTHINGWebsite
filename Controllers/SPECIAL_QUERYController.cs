@@ -39,7 +39,10 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SPECIAL_QUERY/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.USERS, "ID", "Username");
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -48,17 +51,23 @@ namespace iCLOTHINGWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserId,Query,Date")] SPECIAL_QUERY sPECIAL_QUERY)
+        public ActionResult Create(SPECIAL_QUERY sPECIAL_QUERY)
         {
+            sPECIAL_QUERY.ID = GenUniqueID();
+            sPECIAL_QUERY.UserId = (int)Session["user"];
+            sPECIAL_QUERY.Date = DateTime.Now.ToString();
             if (ModelState.IsValid)
             {
                 db.SPECIAL_QUERY.Add(sPECIAL_QUERY);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
-
-            ViewBag.UserId = new SelectList(db.USERS, "ID", "Username", sPECIAL_QUERY.UserId);
             return View(sPECIAL_QUERY);
+        }
+        //Get the highest ID, make the next ID id+1
+        private int GenUniqueID()
+        {
+            return db.SPECIAL_QUERY.Max(f => (int?)f.ID) + 1 ?? 0;
         }
 
         // GET: SPECIAL_QUERY/Edit/5

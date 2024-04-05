@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using System.Xml;
 using iCLOTHINGWebsite.Models;
 
 namespace iCLOTHINGWebsite.Controllers
@@ -39,7 +43,10 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: FEEDBACKs/Create
         public ActionResult Create()
         {
-            ViewBag.UserId = new SelectList(db.USERS, "ID", "Username");
+            if(Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -48,17 +55,24 @@ namespace iCLOTHINGWebsite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserId,Feedback1,Date")] FEEDBACK fEEDBACK)
+        public ActionResult Create(FEEDBACK fEEDBACK)
         {
+            fEEDBACK.ID = GenUniqueID();
+            fEEDBACK.UserId = (int)Session["user"];
+            fEEDBACK.Date = DateTime.Now.ToString();
             if (ModelState.IsValid)
             {
                 db.FEEDBACK.Add(fEEDBACK);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.UserId = new SelectList(db.USERS, "ID", "Username", fEEDBACK.UserId);
             return View(fEEDBACK);
+        }
+        //Get the highest ID, make the next ID id+1
+        private int GenUniqueID()
+        {
+             return db.FEEDBACK.Max(f => (int?)f.ID)+1 ?? 0;
         }
 
         // GET: FEEDBACKs/Edit/5
