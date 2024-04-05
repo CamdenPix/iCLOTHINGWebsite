@@ -1,0 +1,49 @@
+﻿@model IEnumerable<iCLOTHINGWebsite.Models.SHOPPINGCART>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Shopping Cart</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ITEM.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ITEM.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USERS.Username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USERS.ShippingAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ITEM.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ITEM.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USERS.Username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USERS.ShippingAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+    </tr>
+}
+
+</table>
