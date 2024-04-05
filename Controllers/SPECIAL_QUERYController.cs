@@ -17,6 +17,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SPECIAL_QUERY
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var sPECIAL_QUERY = db.SPECIAL_QUERY.Include(s => s.USERS);
             return View(sPECIAL_QUERY.ToList());
         }
@@ -106,6 +115,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SPECIAL_QUERY/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

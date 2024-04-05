@@ -18,7 +18,7 @@ namespace iCLOTHINGWebsite.Controllers
                 return View(Admin);
             }
             var aDMINS = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
-            if(aDMINS == null)
+            if (aDMINS.Count() == 0)
             {
                 return View(Admin);
             }

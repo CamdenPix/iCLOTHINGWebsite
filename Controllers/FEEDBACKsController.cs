@@ -21,6 +21,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: FEEDBACKs
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var fEEDBACK = db.FEEDBACK.Include(f => f.USERS);
             return View(fEEDBACK.ToList());
         }
@@ -28,6 +37,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: FEEDBACKs/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -111,6 +129,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: FEEDBACKs/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

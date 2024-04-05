@@ -39,6 +39,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SUBCATEGORY_ITEMS/Create
         public ActionResult Create()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.ItemID = new SelectList(db.ITEM, "ID", "Name");
             ViewBag.Subcategory = new SelectList(db.SUBCATEGORY, "ID", "Name");
             return View();
@@ -66,6 +75,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SUBCATEGORY_ITEMS/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -101,6 +119,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SUBCATEGORY_ITEMS/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

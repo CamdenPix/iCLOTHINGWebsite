@@ -17,6 +17,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: USERS
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(db.USERS.ToList());
         }
 

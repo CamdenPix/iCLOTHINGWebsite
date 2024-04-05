@@ -39,6 +39,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: ITEMs/Create
         public ActionResult Create()
         {
+            if (Session["user"] == null) 
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             ViewBag.Brand = new SelectList(db.BRAND, "ID", "Brand1");
             ViewBag.Department = new SelectList(db.DEPARTMENT, "ID", "Name");
             return View();

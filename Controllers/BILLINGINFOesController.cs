@@ -17,6 +17,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: BILLINGINFOes
         public ActionResult Index()
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var bILLINGINFO = db.BILLINGINFO.Include(b => b.USERS);
             return View(bILLINGINFO.ToList());
         }
@@ -24,6 +33,15 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: BILLINGINFOes/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
+            if (admin.Count() == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
