@@ -39,5 +39,10 @@ namespace iCLOTHINGWebsite.Controllers
 
             return View();
         }
+
+        public ActionResult Personal()
+        {
+            return View();
+        }
     }
 }

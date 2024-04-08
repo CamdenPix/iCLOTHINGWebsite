@@ -33,6 +33,10 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: SPECIAL_QUERY/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -145,6 +149,22 @@ namespace iCLOTHINGWebsite.Controllers
             db.SPECIAL_QUERY.Remove(sPECIAL_QUERY);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Personal()
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            int userId = (int)Session["user"];
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + userId);
+            if (admin.Count() > 0)
+            {
+                return RedirectToAction("Index", "Special_Query");
+            }
+            var fEEDBACK = db.SPECIAL_QUERY.SqlQuery("SELECT * FROM SPECIAL_QUERY WHERE " + userId + " = UserID");
+            return View(fEEDBACK.ToList());
         }
 
         protected override void Dispose(bool disposing)
