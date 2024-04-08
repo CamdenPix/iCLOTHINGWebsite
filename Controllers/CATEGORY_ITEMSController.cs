@@ -15,10 +15,13 @@ namespace iCLOTHINGWebsite.Controllers
         private iCLOTHINGEntities db = new iCLOTHINGEntities();
 
         // GET: CATEGORY_ITEMS
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             var cATEGORY_ITEMS = db.CATEGORY_ITEMS.Include(c => c.CATEGORY1).Include(c => c.ITEM);
-            return View(cATEGORY_ITEMS.ToList());
+            
+            
+                return View(cATEGORY_ITEMS.ToList());
+
         }
 
         // GET: CATEGORY_ITEMS/Details/5

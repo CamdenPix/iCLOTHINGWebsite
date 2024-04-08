@@ -10,6 +10,15 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
     <h2>Departments</h2>
+    <p>
+        @using (Html.BeginForm("Index", "DEPARTMENTs", FormMethod.Get))
+        {
+            <b>Search by Department Name</b>
+            
+            <b>@Html.TextBox("search", "", htmlAttributes: new { @class = " w-50 form-control" }) </b>
+            <input type="submit" value="Search" />
+        }
+    </p>
     <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
         <div class="col-md-4">
@@ -24,7 +33,7 @@
     </div>
     <div>
         <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
-       
+
         <table class="table" border="1">
             <tr>
                 <th>
@@ -46,9 +55,9 @@
                         @Html.DisplayFor(modelItem => item.Description)
                     </td>
                     <td>
-                       
+
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                        
+
                     </td>
                 </tr>
             }

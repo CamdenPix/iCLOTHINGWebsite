@@ -25,13 +25,16 @@
 
     <div>
         <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
-       <p>
-           @using(Html.BeginForm("Index","ITEMs", FormMethod.Get ))
+        <p>
+            @using (Html.BeginForm("Index", "ITEMs", FormMethod.Get))
             {
-                <b>@Html.TextBox("search", "", htmlAttributes: new {@class=" w-50 form-control"}) </b>
-                <input type="submit" value="Search"/>
+                <b>Search By: </b>
+                @Html.RadioButton("SearchBy", "Name", true) <text>Name</text>
+                @Html.RadioButton("SearchBy", "Brand") <text>Brand</text>
+                <b>@Html.TextBox("search", "", htmlAttributes: new { @class = " w-50 form-control" }) </b>
+                <input type="submit" value="Search" class="btn btn-success" />
             }
-       </p>
+        </p>
        
         <h2 style='font-weight: bold;'>Take a look at all of our Items!</h2>
         <table class="table" border="1">

@@ -15,9 +15,19 @@ namespace iCLOTHINGWebsite.Controllers
         private iCLOTHINGEntities db = new iCLOTHINGEntities();
 
         // GET: DEPARTMENTs
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
-            return View(db.DEPARTMENT.ToList());
+            
+
+            if (String.IsNullOrEmpty(search))
+            {
+                return View(db.DEPARTMENT.ToList());
+            }
+
+            string input = "'" + search + "'";
+            string query = "SELECT * FROM DEPARTMENT WHERE Name = " + input;
+            var list = db.DEPARTMENT.SqlQuery(query).ToList();
+            return View(list);
         }
 
         // GET: DEPARTMENTs/Details/5

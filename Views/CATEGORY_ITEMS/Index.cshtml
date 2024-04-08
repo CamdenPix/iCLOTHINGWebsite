@@ -9,6 +9,17 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <body>
     <h2>Categories</h2>
+
+    <p>
+        @using (Html.BeginForm("Index", "CATEGORY_ITEMS", FormMethod.Get))
+        {
+            <b>Search by Category Name</b>
+
+            <b>@Html.TextBox("search", "", htmlAttributes: new { @class = " w-50 form-control" }) </b>
+            <input type="submit" value="Search" />
+        }
+    </p>
+
     <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
         <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
         <div class="col-md-4">
