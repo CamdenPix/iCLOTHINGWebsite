@@ -89,9 +89,9 @@
                         @Html.DisplayFor(modelItem => item.DEPARTMENT1.Name)
                     </td>
                     <td>
-                       
+                        @Html.ActionLink("Add to Cart", "Add", new { id = item.ID }) |
                         @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                       
+
                     </td>
                 </tr>
             }

@@ -5,9 +5,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
+using System.Web.Management;
 using System.Web.Mvc;
 using System.Web.UI.WebControls.Expressions;
 using iCLOTHINGWebsite.Models;
+using Microsoft.Win32;
 
 namespace iCLOTHINGWebsite.Controllers
 {
@@ -64,9 +67,7 @@ namespace iCLOTHINGWebsite.Controllers
             return View();
         }
 
-        // POST: ITEMs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Name,Brand,Department,Price,Size,Description,Quantity")] ITEM iTEM)
@@ -82,6 +83,45 @@ namespace iCLOTHINGWebsite.Controllers
             ViewBag.Department = new SelectList(db.DEPARTMENT, "ID", "Name", iTEM.Department);
             return View(iTEM);
         }
+
+
+        public ActionResult Add(int? id)
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index");
+            }
+            
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ITEM iTEM = db.ITEM.Find(id);
+            
+            if (iTEM == null)
+            {
+                return HttpNotFound();
+            }
+            int userID = (int)Session["user"];
+
+            Random rnd = new Random();
+            SHOPPINGCART addedCart = new SHOPPINGCART();
+            addedCart.ID = rnd.Next(100);
+            addedCart.ItemID = iTEM.ID;
+            addedCart.UserID = userID;
+            addedCart.Quantity = 1;
+
+            if (ModelState.IsValid)
+            {
+                db.SHOPPINGCART.Add(addedCart);
+                db.SaveChanges();
+                
+            }
+            return RedirectToAction("Index");
+
+
+        }
+
 
         // GET: ITEMs/Edit/5
         public ActionResult Edit(int? id)
