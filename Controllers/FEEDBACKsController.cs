@@ -63,7 +63,7 @@ namespace iCLOTHINGWebsite.Controllers
         {
             if(Session["user"] == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Userpasswords");
             }
             return View();
         }
