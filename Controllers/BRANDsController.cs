@@ -15,9 +15,11 @@ namespace iCLOTHINGWebsite.Controllers
         private iCLOTHINGEntities db = new iCLOTHINGEntities();
 
         // GET: BRANDs
-        public ActionResult Index()
+        public ActionResult Index(string search)
         {
             return View(db.BRAND.ToList());
+
+            
         }
 
         // GET: BRANDs/Details/5

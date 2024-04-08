@@ -16,18 +16,29 @@ namespace iCLOTHINGWebsite.Controllers
         private iCLOTHINGEntities db = new iCLOTHINGEntities();
 
         // GET: ITEMs
-        public ActionResult Index(string search)
+        public ActionResult Index(string SearchBy, string search)
         {
             var iTEM = db.ITEM.Include(i => i.BRAND1).Include(i => i.DEPARTMENT1);
             if (String.IsNullOrEmpty(search))
             {
                 return View(iTEM);
             }
-            Console.WriteLine(search);
-            string input = "'" + search + "'";
-            string query = "SELECT * FROM ITEM WHERE Name = "+ input;
-            var list = db.ITEM.SqlQuery(query).ToList();
-            return View(list);
+            else if (SearchBy == "Brand")
+            {
+
+                string input = "'" + search + "'";
+                string query = "SELECT I.* FROM ITEM AS I, BRAND AS B WHERE B.ID = I.Brand AND B.Brand = " + input;
+                var list = db.ITEM.SqlQuery(query).ToList();
+                return View(list);
+            }
+            else
+            {
+                string input = "'" + search + "'";
+                string query = "SELECT * FROM ITEM WHERE Name = " + input;
+                var list = db.ITEM.SqlQuery(query).ToList();
+                return View(list);
+            }
+        
         }
 
         // GET: ITEMs/Details/5
@@ -48,15 +59,6 @@ namespace iCLOTHINGWebsite.Controllers
         // GET: ITEMs/Create
         public ActionResult Create()
         {
-            if (Session["user"] == null) 
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
-            if (admin.Count() == 0)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             ViewBag.Brand = new SelectList(db.BRAND, "ID", "Brand1");
             ViewBag.Department = new SelectList(db.DEPARTMENT, "ID", "Name");
             return View();
