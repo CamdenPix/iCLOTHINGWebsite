@@ -41,11 +41,6 @@ namespace iCLOTHINGWebsite.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + Session["user"]);
-            if (admin.Count() == 0)
-            {
-                return RedirectToAction("Index", "Home");
-            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -159,6 +154,22 @@ namespace iCLOTHINGWebsite.Controllers
             db.FEEDBACK.Remove(fEEDBACK);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Personal() 
+        {
+            if (Session["user"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            int userId = (int)Session["user"];
+            var admin = db.ADMINS.SqlQuery("SELECT * FROM ADMINS WHERE UserID = " + userId);
+            if (admin.Count() > 0)
+            {
+                return RedirectToAction("Index", "Feedbacks");
+            }
+            var fEEDBACK = db.FEEDBACK.SqlQuery("SELECT ID, UserId, Feedback AS Feedback1, Date FROM FEEDBACK WHERE " + userId + " = UserID");
+            return View(fEEDBACK.ToList());
         }
 
         protected override void Dispose(bool disposing)
